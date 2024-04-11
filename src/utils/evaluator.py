@@ -2,7 +2,7 @@ import torch
 import logging
 import numpy as np
 from collections import defaultdict
-from src.preprocess.processor import ENTITY_TYPES
+from ..preprocess.processor import ENTITY_TYPES
 
 logger = logging.getLogger(__name__)
 
@@ -97,6 +97,7 @@ def span_decode(start_logits, end_logits, raw_text, id2ent):
 
     return predict_entities
 
+
 # 严格解码 baseline
 def mrc_decode(start_logits, end_logits, raw_text):
     predict_entities = []
@@ -108,7 +109,7 @@ def mrc_decode(start_logits, end_logits, raw_text):
             continue
         for j, e_type in enumerate(end_pred[i:]):
             if s_type == e_type:
-                tmp_ent = raw_text[i:i+j+1]
+                tmp_ent = raw_text[i:i + j + 1]
                 predict_entities.append((tmp_ent, i))
                 break
 
@@ -237,6 +238,7 @@ def span_evaluation(model, dev_info, device, ent2id):
 
     return metric_str, mirco_metrics[2]
 
+
 def mrc_evaluation(model, dev_info, device):
     dev_loader, (dev_callback_info, type_weight) = dev_info
 
@@ -265,11 +267,10 @@ def mrc_evaluation(model, dev_info, device):
 
     for tmp_start_logits, tmp_end_logits, tmp_callback \
             in zip(start_logits, end_logits, dev_callback_info):
-
         text, text_offset, ent_type, gt_entities = tmp_callback
 
-        tmp_start_logits = tmp_start_logits[text_offset:text_offset+len(text)]
-        tmp_end_logits = tmp_end_logits[text_offset:text_offset+len(text)]
+        tmp_start_logits = tmp_start_logits[text_offset:text_offset + len(text)]
+        tmp_end_logits = tmp_end_logits[text_offset:text_offset + len(text)]
 
         pred_entities = mrc_decode(tmp_start_logits, tmp_end_logits, text)
 
@@ -281,6 +282,6 @@ def mrc_evaluation(model, dev_info, device):
         mirco_metrics += temp_metric * type_weight[_type]
 
     metric_str = f'[MIRCO] precision: {mirco_metrics[0]:.4f}, ' \
-                  f'recall: {mirco_metrics[1]:.4f}, f1: {mirco_metrics[2]:.4f}'
+                 f'recall: {mirco_metrics[1]:.4f}, f1: {mirco_metrics[2]:.4f}'
 
     return metric_str, mirco_metrics[2]

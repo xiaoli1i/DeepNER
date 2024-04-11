@@ -1,5 +1,6 @@
 import argparse
 
+
 class Args:
     @staticmethod
     def parse():
@@ -45,7 +46,7 @@ class Args:
         parser.add_argument('--mode', type=str, default='train',
                             help='train / stack')
 
-        parser.add_argument('--max_seq_len', default=512, type=int)
+        parser.add_argument('--max_seq_len', default=256, type=int)
 
         parser.add_argument('--eval_batch_size', default=64, type=int)
 
@@ -74,7 +75,7 @@ class Args:
 
         parser.add_argument('--adam_epsilon', default=1e-8, type=float)
 
-        parser.add_argument('--train_batch_size', default=24, type=int)
+        parser.add_argument('--train_batch_size', default=12, type=int)
 
         parser.add_argument('--eval_model', default=True, action='store_true',
                             help='whether to eval model after training')

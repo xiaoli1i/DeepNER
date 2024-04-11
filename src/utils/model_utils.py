@@ -5,8 +5,8 @@ import torch.nn as nn
 from torchcrf import CRF
 from itertools import repeat
 from transformers import BertModel
-from src.utils.functions_utils import vote
-from src.utils.evaluator import crf_decode, span_decode
+from functions_utils import vote
+from evaluator import crf_decode, span_decode
 
 
 class LabelSmoothingCrossEntropy(nn.Module):

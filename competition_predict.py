@@ -10,6 +10,7 @@ from src.preprocess.processor import cut_sent, fine_grade_tokenize
 
 MID_DATA_DIR = "./data/mid_data"
 RAW_DATA_DIR = "./data/raw_data_random"
+
 SUBMIT_DIR = "./result"
 GPU_IDS = "0"
 
@@ -19,12 +20,12 @@ MAX_SEQ_LEN = 512
 
 TASK_TYPE = "crf"  # choose crf or span
 VOTE = True  # choose True or False
-VERSION = "mixed"  # choose single or ensemble or mixed ; if mixed  VOTE and TAST_TYPE is useless.
+VERSION = "single"  # choose single or ensemble or mixed ; if mixed  VOTE and TAST_TYPE is useless.
 
 # single_predict
-BERT_TYPE = "uer_large"  # roberta_wwm / ernie_1 / uer_large
+BERT_TYPE = "roberta_wwm"  # roberta_wwm / ernie_1 / uer_large
 
-BERT_DIR = f"./bert/torch_{BERT_TYPE}"
+BERT_DIR = f"../bert/torch_{BERT_TYPE}"
 with open('./best_ckpt_path.txt', 'r', encoding='utf-8') as f:
     CKPT_PATH = f.read().strip()
 
@@ -37,7 +38,7 @@ with open('./best_ckpt_path.txt', 'r', encoding='utf-8') as f:
 
 
 # mixed_predict
-MIX_BERT_DIR = "./bert/torch_uer_large"
+MIX_BERT_DIR = "../bert/torch_uer_large"
 
 with open('./best_ckpt_path.txt', 'r', encoding='utf-8') as f:
     MIX_DIR_LIST = f.readlines()
@@ -290,7 +291,6 @@ def mixed_predict():
 
 if __name__ == '__main__':
     assert VERSION in ['single', 'ensemble', 'mixed'], 'VERSION mismatch'
-
     if VERSION == 'single':
         single_predict()
     elif VERSION == 'ensemble':
