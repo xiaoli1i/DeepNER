@@ -1,0 +1,1 @@
+D:\ProgramCode\xunfei\DeepNER\out\roberta_wwm_crf\checkpoint-2060\model.pt
